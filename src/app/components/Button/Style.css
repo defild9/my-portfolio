@@ -1,0 +1,22 @@
+.gradient-button {
+  background: linear-gradient(
+    to right,
+    #a751cf 0%,
+    #d36666 34%,
+    #cc9d57 67%,
+    #e7ca34 95%
+  );
+  cursor: pointer;
+  transition: background 0.5s ease;
+}
+
+/* Test hover  */
+.gradient-button:hover {
+  background: linear-gradient(
+    to right,
+    #e7ca34 0%,
+    #cc9d57 34%,
+    #d36666 67%,
+    #a751cf 95%
+  );
+}
