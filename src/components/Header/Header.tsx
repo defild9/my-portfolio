@@ -7,6 +7,7 @@ import Button from '../Button/Button'
 export default function Header() {
   const linkArray: { [key: string]: string } = {
     About: '#about',
+    Skills: '#skills',
     Portfolio: '#portfolio',
     Contact: '#contact',
   }

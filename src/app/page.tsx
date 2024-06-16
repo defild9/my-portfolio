@@ -2,6 +2,7 @@
 
 import AboutSection from "@/components/AboutSection/AboutSection";
 import MainSection from "@/components/MainSection/MainSection";
+import MySkillsSection from "@/components/MySkillsSection/MySkillsSection";
 import Image from "next/image";
 
 export default function Home() {
@@ -9,6 +10,7 @@ export default function Home() {
     <main className="flex min-h-screen flex-col justify-start">
       <MainSection />
       <AboutSection />
+      <MySkillsSection />
     </main>
   );
 }

@@ -5,6 +5,7 @@ import './Style.css'
 export default function Footer() {
   const linkArray: { [key: string]: string } = {
     About: '#about',
+    Skills: '#skills',
     Portfolio: '#portfolio',
     Contact: '#contact',
   }
