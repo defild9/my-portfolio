@@ -1,10 +1,11 @@
-"use client"
+'use client'
 
-import AboutSection from "@/components/AboutSection/AboutSection";
-import MainSection from "@/components/MainSection/MainSection";
-import MySkillsSection from "@/components/MySkillsSection/MySkillsSection";
-import PortfolioSection from "@/components/PortfolioSection/PortfolioSection";
-import Image from "next/image";
+import AboutSection from '@/components/AboutSection/AboutSection'
+import ExperienceSection from '@/components/ExperienceSection/ExperienceSection'
+import MainSection from '@/components/MainSection/MainSection'
+import MySkillsSection from '@/components/MySkillsSection/MySkillsSection'
+import PortfolioSection from '@/components/PortfolioSection/PortfolioSection'
+import Image from 'next/image'
 
 export default function Home() {
   return (
@@ -13,6 +14,7 @@ export default function Home() {
       <AboutSection />
       <MySkillsSection />
       <PortfolioSection />
+      <ExperienceSection />
     </main>
-  );
+  )
 }
