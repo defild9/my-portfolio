@@ -10,6 +10,7 @@ export default function Header() {
     Skills: '#skills',
     Portfolio: '#portfolio',
     Contact: '#contact',
+    Experience: '#experience',
   }
 
   return (
