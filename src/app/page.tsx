@@ -1,4 +1,5 @@
 import AboutSection from '@/components/AboutSection/AboutSection'
+import ContactSection from '@/components/ContactSection/ContactSection'
 import ExperienceSection from '@/components/ExperienceSection/ExperienceSection'
 import MainSection from '@/components/MainSection/MainSection'
 import MySkillsSection from '@/components/MySkillsSection/MySkillsSection'
@@ -12,6 +13,7 @@ export default function Home() {
       <MySkillsSection />
       <PortfolioSection />
       <ExperienceSection />
+      <ContactSection />
     </main>
   )
 }
