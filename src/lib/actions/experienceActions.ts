@@ -1,7 +1,8 @@
 'use server'
-import Experience, { IExperience } from '@/models/experienceModel'
+import Experience from '@/models/experienceModel'
 import { revalidatePath } from 'next/cache'
 import { connectToMongoDB } from '../db'
+import { IExperience } from '@/models/modelTypes/experienceModel.types'
 
 export const createExperience = async ({
   jobTitle,
@@ -21,7 +22,7 @@ export const createExperience = async ({
     })
     await newExperience.save()
     revalidatePath('/')
-    return newExperience.toString()
+    return JSON.parse(JSON.stringify(newExperience))
   } catch (error) {
     console.log(error)
     return { message: 'Error creating experience' }
@@ -62,7 +63,7 @@ export const getExperiences = async () => {
   await connectToMongoDB()
   try {
     const experiences = await Experience.find({})
-    return experiences
+    return JSON.parse(JSON.stringify(experiences))
   } catch (error) {
     console.log(error)
     return { message: 'Error getting experiences' }

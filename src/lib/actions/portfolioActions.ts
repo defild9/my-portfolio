@@ -1,7 +1,8 @@
 'use server'
-import Portfolio, { IPortfolio } from '@/models/portfolioModel'
+import Portfolio from '@/models/portfolioModel'
 import { revalidatePath } from 'next/cache'
 import { connectToMongoDB } from '../db'
+import { IPortfolio } from '@/models/modelTypes/portfolioModel.types'
 
 export const createPortfolio = async ({
   image,
@@ -13,7 +14,7 @@ export const createPortfolio = async ({
     const newPortfolio = new Portfolio({ image, title, description })
     await newPortfolio.save()
     revalidatePath('/')
-    return newPortfolio.toString()
+    return JSON.parse(JSON.stringify(newPortfolio))
   } catch (error) {
     console.log(error)
     return { message: 'Error creating portfolio' }
@@ -51,7 +52,7 @@ export const getPortfolios = async () => {
   await connectToMongoDB()
   try {
     const portfolios = await Portfolio.find({})
-    return portfolios
+    return JSON.parse(JSON.stringify(portfolios))
   } catch (error) {
     console.log(error)
     return { message: 'Error getting portfolios' }
@@ -62,7 +63,7 @@ export const getPortfolio = async (id: string) => {
   await connectToMongoDB()
   try {
     const portfolio = await Portfolio.findOne({ _id: id })
-    return portfolio
+    return JSON.parse(JSON.stringify(portfolio))
   } catch (error) {
     console.log(error)
     return { message: 'Error getting portfolio' }

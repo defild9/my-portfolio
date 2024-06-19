@@ -1,18 +1,19 @@
 import React from 'react'
 import Experience from '../Experience/Experience'
+import { getExperiences } from '@/lib/actions/experienceActions'
+import { IExtendedExperience } from '@/models/modelTypes/experienceModel.types'
 
-// change to get data from database
-const experiences = []
-
-export default function ExperienceSection() {
+export default async function ExperienceSection() {
+  const experiences: IExtendedExperience[] | { message: string } =
+    await getExperiences()
   return (
     <div id="experience" className="flex flex-col px-40 py-20">
       <h2 className="text-4xl font-semibold mb-5">Experience</h2>
       <div className="border-l-4 border-gray-300 pl-4">
-        {experiences.length > 0 ? (
+        {Array.isArray(experiences) && experiences.length > 0 ? (
           experiences.map((exp, index) => (
             <Experience
-              key={index}
+              key={exp._id}
               jobTitle={exp.jobTitle}
               companyName={exp.companyName}
               startDate={exp.startDate}

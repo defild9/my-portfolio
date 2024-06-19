@@ -1,17 +1,5 @@
-import mongoose, { Document, Model, Schema } from 'mongoose'
-
-export interface IExperience {
-  jobTitle: string
-  companyName: string
-  startDate: string
-  endDate: string
-  jobDescription: string
-}
-
-export interface IExperienceDocument extends IExperience, Document {
-  createdAt: Date
-  updatedAt: Date
-}
+import mongoose, { Model, Schema } from 'mongoose'
+import { IExperienceDocument } from './modelTypes/experienceModel.types'
 
 const experienceSchema = new Schema<IExperienceDocument>(
   {

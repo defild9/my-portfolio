@@ -1,7 +1,8 @@
-import React from 'react';
-import SocialLinks from '../SocialLinks/SocialLinks';
-import Button from '../Button/Button';
-import Image from 'next/image';
+'use client'
+import React from 'react'
+import SocialLinks from '../SocialLinks/SocialLinks'
+import Button from '../Button/Button'
+import Image from 'next/image'
 
 function MainSection() {
   return (
@@ -10,7 +11,9 @@ function MainSection() {
         <div className="max-w-5 mb-10">
           <SocialLinks />
         </div>
-        <h1 className="text-5xl leading-snug mb-5">👋 Hey there, It's Yevhenii Biletskyi</h1>
+        <h1 className="text-5xl leading-snug mb-5">
+          👋 Hey there, It's Yevhenii Biletskyi
+        </h1>
         <p className="text-lg text-justify mb-10">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita
           dicta tempore animi doloremque dignissimos nisi mollitia ut alias
@@ -40,7 +43,7 @@ function MainSection() {
         />
       </div>
     </div>
-  );
+  )
 }
 
-export default MainSection;
+export default MainSection

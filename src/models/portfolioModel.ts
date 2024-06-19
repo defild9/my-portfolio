@@ -1,15 +1,5 @@
 import mongoose, { Document, Model, Schema } from 'mongoose'
-
-export interface IPortfolio {
-  image: string
-  title: string
-  description: string
-}
-
-export interface IPortfolioDocument extends IPortfolio, Document {
-  createdAt: Date
-  updatedAt: Date
-}
+import { IPortfolioDocument } from './modelTypes/portfolioModel.types'
 
 const portfolioSchema = new Schema<IPortfolioDocument>(
   {

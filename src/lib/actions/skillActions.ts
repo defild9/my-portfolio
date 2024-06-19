@@ -1,7 +1,8 @@
 'use server'
-import Skill, { ISkill } from '@/models/skillsModel'
+import Skill from '@/models/skillsModel'
 import { revalidatePath } from 'next/cache'
 import { connectToMongoDB } from '../db'
+import { ISkill } from '@/models/modelTypes/skillsModel.types'
 
 export const createSkill = async ({ skillName, skillImage }: ISkill) => {
   await connectToMongoDB()
@@ -9,7 +10,7 @@ export const createSkill = async ({ skillName, skillImage }: ISkill) => {
     const newSkill = new Skill({ skillName, skillImage })
     await newSkill.save()
     revalidatePath('/')
-    return newSkill.toString()
+    return JSON.parse(JSON.stringify(newSkill))
   } catch (error) {
     console.log(error)
     return { message: 'Error creating skill' }
@@ -47,7 +48,7 @@ export const getSkills = async () => {
   await connectToMongoDB()
   try {
     const skills = await Skill.find({})
-    return skills
+    return skills.map((skill) => JSON.parse(JSON.stringify(skill)))
   } catch (error) {
     console.log(error)
     return { message: 'Error getting skills' }
