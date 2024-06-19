@@ -1,91 +1,46 @@
-import React, { useState } from 'react'
+'use client'
+
+import React, { useState, useEffect } from 'react'
 import PortfolioCard from '../PortfolioCard/PortfolioCard'
 import Button from '../Button/Button'
+import { getPortfolios } from '@/lib/actions/portfolioActions'
+import { IExtendedPortfolio } from '@/models/modelTypes/portfolioModel.types'
 
 export default function PortfolioSection() {
   const [showAll, setShowAll] = useState(false)
+  const [portfolioData, setPortfolioData] = useState<IExtendedPortfolio[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getPortfolios()
+
+        console.log(data)
+        if (Array.isArray(data)) {
+          setPortfolioData(data)
+        } else {
+          console.error('Failed to fetch portfolio data:', data.message)
+        }
+      } catch (error) {
+        console.error('Error fetching portfolio data:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchData()
+  }, [])
 
   const handleViewMore = () => {
     setShowAll(true)
   }
 
-  // change to get data from database
-  const portfolioData = [
-    {
-      id: 1,
-      image:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/2300px-React-icon.svg.png',
-      title: 'Amazon Scrapper',
-      description:
-        'A simple blog which has user authentication such as Sign Up, Sign In...',
-    },
-    {
-      id: 1,
-      image:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/2300px-React-icon.svg.png',
-      title: 'Amazon Scrapper',
-      description:
-        'A simple blog which has user authentication such as Sign Up, Sign In...',
-    },
-    {
-      id: 1,
-      image:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/2300px-React-icon.svg.png',
-      title: 'Amazon Scrapper',
-      description:
-        'A simple blog which has user authentication such as Sign Up, Sign In...',
-    },
-    {
-      id: 1,
-      image:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/2300px-React-icon.svg.png',
-      title: 'Amazon Scrapper',
-      description:
-        'A simple blog which has user authentication such as Sign Up, Sign In...',
-    },
-    {
-      id: 1,
-      image:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/2300px-React-icon.svg.png',
-      title: 'Amazon Scrapper',
-      description:
-        'A simple blog which has user authentication such as Sign Up, Sign In...',
-    },
-    {
-      id: 1,
-      image:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/2300px-React-icon.svg.png',
-      title: 'Amazon Scrapper',
-      description:
-        'A simple blog which has user authentication such as Sign Up, Sign In...',
-    },
-    {
-      id: 1,
-      image:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/2300px-React-icon.svg.png',
-      title: 'Amazon Scrapper',
-      description:
-        'A simple blog which has user authentication such as Sign Up, Sign In...',
-    },
-    {
-      id: 1,
-      image:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/2300px-React-icon.svg.png',
-      title: 'Amazon Scrapper',
-      description:
-        'A simple blog which has user authentication such as Sign Up, Sign In...',
-    },
-    {
-      id: 1,
-      image:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/2300px-React-icon.svg.png',
-      title: 'Amazon Scrapper',
-      description:
-        'A simple blog which has user authentication such as Sign Up, Sign In...',
-    },
-  ]
-
   const itemsToShow = showAll ? portfolioData : portfolioData.slice(0, 6)
+
+  if (loading) {
+    return <div>Loading...</div>
+  }
 
   return (
     <div id="portfolio" className="flex flex-col items-center px-40 py-20">
@@ -93,7 +48,7 @@ export default function PortfolioSection() {
       <div className="flex flex-wrap justify-center gap-20">
         {itemsToShow.map((item) => (
           <PortfolioCard
-            key={item.id}
+            key={item._id}
             image={item.image}
             title={item.title}
             description={item.description}
