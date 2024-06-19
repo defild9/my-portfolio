@@ -1,14 +1,5 @@
-import mongoose, { Document, Model, Schema } from 'mongoose'
-
-export interface ISkill {
-  skillName: string
-  skillImage: string
-}
-
-export interface ISkillDocument extends ISkill, Document {
-  createdAt: Date
-  updatedAt: Date
-}
+import mongoose, { Model, Schema } from 'mongoose'
+import { ISkillDocument } from './modelTypes/skillsModel.types'
 
 const skillSchema = new Schema<ISkillDocument>(
   {
