@@ -39,7 +39,7 @@ export default function Sidebar({ userEmail }: SidebarProps) {
       >
         <div className="flex items-center justify-between h-16 bg-gray-900 p-4">
           <h1 className="text-xl font-semibold truncate overflow-hidden">
-            Hi, {userEmail}
+            <Link href="/admin">Hi, {userEmail}</Link>
           </h1>
           <button className="md:hidden p-4" onClick={toggleSidebar}>
             <svg

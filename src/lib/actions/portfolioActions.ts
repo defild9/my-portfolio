@@ -3,14 +3,20 @@ import Portfolio from '@/models/portfolioModel'
 import { revalidatePath } from 'next/cache'
 import { connectToMongoDB } from '../db'
 import { IPortfolio } from '@/models/modelTypes/portfolioModel.types'
+import { promises as fsPromises } from 'fs'
 
 export const createPortfolio = async ({
-  image,
   title,
   description,
-}: IPortfolio) => {
+  formData,
+}: {
+  title: string
+  description: string
+  formData: FormData | null
+}) => {
   await connectToMongoDB()
   try {
+    const image = formData ? await savePhoto(formData) : 'no photo'
     const newPortfolio = new Portfolio({ image, title, description })
     await newPortfolio.save()
     revalidatePath('/')
@@ -23,10 +29,19 @@ export const createPortfolio = async ({
 
 export const updatePortfolio = async (
   id: string,
-  { image, title, description }: IPortfolio
+  {
+    title,
+    description,
+    formData,
+  }: {
+    title: string
+    description: string
+    formData: FormData | null
+  }
 ) => {
   await connectToMongoDB()
   try {
+    const image = formData ? await savePhoto(formData) : 'no photo'
     await Portfolio.updateOne({ _id: id }, { image, title, description })
     revalidatePath('/')
     return { message: 'Portfolio updated' }
@@ -68,4 +83,24 @@ export const getPortfolio = async (id: string) => {
     console.log(error)
     return { message: 'Error getting portfolio' }
   }
+}
+
+// temporarily solution
+export async function savePhoto(formData: FormData): Promise<string> {
+  const file = formData.get('portfolioImage') as File
+  const portfolioTitle = formData.get('portfolioTitle') as string
+
+  const filePath = `./public/${portfolioTitle}.${getFileExtension(file.name)}`
+  await saveFile(file, filePath)
+
+  return `/${portfolioTitle}.${getFileExtension(file.name)}`
+}
+
+async function saveFile(file: File, filePath: string): Promise<void> {
+  const data = await file.arrayBuffer()
+  await fsPromises.writeFile(filePath, Buffer.from(data))
+}
+
+function getFileExtension(filename: string): string {
+  return filename.split('.').pop()!.toLowerCase()
 }
