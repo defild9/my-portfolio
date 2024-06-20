@@ -3,14 +3,22 @@ import Skill from '@/models/skillsModel'
 import { revalidatePath } from 'next/cache'
 import { connectToMongoDB } from '../db'
 import { ISkill } from '@/models/modelTypes/skillsModel.types'
+import { savePhoto } from '../helpers/fileSaver'
 
-export const createSkill = async ({ skillName, skillImage }: ISkill) => {
+export const createSkill = async ({
+  skillName,
+  formData,
+}: {
+  skillName: string
+  formData: FormData
+}) => {
   await connectToMongoDB()
   try {
+    const skillImage = await savePhoto(formData)
     const newSkill = new Skill({ skillName, skillImage })
     await newSkill.save()
     revalidatePath('/')
-    return JSON.parse(JSON.stringify(newSkill))
+    return { message: 'Skill added' }
   } catch (error) {
     console.log(error)
     return { message: 'Error creating skill' }
@@ -19,10 +27,11 @@ export const createSkill = async ({ skillName, skillImage }: ISkill) => {
 
 export const updateSkill = async (
   id: string,
-  { skillName, skillImage }: ISkill
+  { skillName, formData }: { skillName: string; formData: FormData }
 ) => {
   await connectToMongoDB()
   try {
+    const skillImage = await savePhoto(formData)
     await Skill.updateOne({ _id: id }, { skillName, skillImage })
     revalidatePath('/')
     return { message: 'Skill updated' }
