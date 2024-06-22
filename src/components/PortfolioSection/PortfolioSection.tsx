@@ -16,7 +16,6 @@ export default function PortfolioSection() {
       try {
         const data = await getPortfolios()
 
-        console.log(data)
         if (Array.isArray(data)) {
           setPortfolioData(data)
         } else {
@@ -43,9 +42,9 @@ export default function PortfolioSection() {
   }
 
   return (
-    <div id="portfolio" className="flex flex-col items-center px-40 py-20">
-      <h2 className="text-4xl text-center font-semibold mb-5">Portfolio</h2>
-      <div className="flex flex-wrap justify-center gap-20">
+    <div id="portfolio" className="flex flex-col items-center px-6 md:px-20 lg:px-40 py-10 md:py-20">
+      <h2 className="text-2xl md:text-3xl lg:text-4xl text-center font-semibold mb-5">Portfolio</h2>
+      <div className="flex flex-wrap justify-center gap-6 md:gap-10 lg:gap-20">
         {itemsToShow.map((item) => (
           <PortfolioCard
             key={item._id}

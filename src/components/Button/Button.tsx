@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import React from 'react'
 import './Style.css'
@@ -15,16 +15,14 @@ const Button = ({
   isGradientButton,
 }: IButtonProps) => {
   return (
-    <>
-      <button
-        onClick={handleClick}
-        className={`${
-          isGradientButton ? 'gradient-button' : ''
-        } hover:bg-gray-200 font-light border border-black py-3 px-10 rounded-full `}
-      >
-        {buttonText}
-      </button>
-    </>
+    <button
+      onClick={handleClick}
+      className={`${
+        isGradientButton ? 'gradient-button' : ''
+      } hover:bg-gray-200 font-light border border-black py-2 px-6 md:py-3 md:px-10 rounded-full text-sm md:text-base`}
+    >
+      {buttonText}
+    </button>
   )
 }
 

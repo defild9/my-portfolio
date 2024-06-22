@@ -18,3 +18,7 @@
   width: 150px;
   height: 150px;
 }
+
+.skill-card:hover {
+  transform: scale(1.05);
+}

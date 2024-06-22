@@ -1,4 +1,65 @@
-header {
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
   height: 80px;
   border-bottom: 1px solid #000000;
+  position: relative;
+}
+
+.logo {
+  flex: 1;
+}
+
+.desktop-menu {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+}
+
+.button-container {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.mobile-header {
+  display: none;
+}
+
+.mobile-menu {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 80px;
+  left: 0;
+  right: 0;
+  background-color: white;
+  padding: 10px;
+  border-top: 1px solid #000;
+}
+
+@media (max-width: 768px) {
+  .desktop-menu {
+    display: none;
+  }
+
+  .button-container {
+    display: none;
+  }
+
+  .mobile-header {
+    display: flex;
+  }
+
+  .mobile-header .logo {
+    text-align: left;
+    flex: 1;
+  }
+
+  .mobile-header .button-container {
+    display: block;
+  }
 }

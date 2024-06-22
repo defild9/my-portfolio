@@ -17,7 +17,7 @@ export default function Experience({
   jobDescription,
 }: ExperienceProp) {
   return (
-    <div className="flex items-center mb-4">
+    <div className="flex md:flex-row items-center mb-4">
       <div className="w-4 h-4 gradient rounded-full"></div>
       <div className="ml-4">
         <h3 className="text-xl font-semibold">
