@@ -7,13 +7,19 @@ import {
   IExtendedContact,
 } from '@/models/modelTypes/contactModel.types'
 
+export interface IContactResponse {
+  newContact?: IExtendedContact
+  message?: string
+  error?: unknown
+}
+
 export const createContact = async ({
   name,
   email,
   subject,
   phone,
   message,
-}: IContact) => {
+}: IContact): Promise<IContactResponse> => {
   await connectToMongoDB()
   try {
     const newContact = new Contact({
@@ -24,8 +30,9 @@ export const createContact = async ({
       message,
     })
     await newContact.save()
-    revalidatePath('/')
-    return JSON.parse(JSON.stringify(newContact)) as IExtendedContact
+    return {
+      newContact: JSON.parse(JSON.stringify(newContact)) as IExtendedContact,
+    }
   } catch (error) {
     console.log(error)
     return { message: 'Error creating contact', error: error }

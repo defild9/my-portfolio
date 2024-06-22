@@ -5,8 +5,8 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import contactShema from '@/lib/validators/contactFormValidator'
 import Button from '../Button/Button'
-import { IContact } from '@/models/contactModel'
-import { createContact } from '@/lib/actions/contactAction'
+import { IContactResponse, createContact } from '@/lib/actions/contactAction'
+import { IContact } from '@/models/modelTypes/contactModel.types'
 
 export default function ContactForm() {
   const {
@@ -16,8 +16,8 @@ export default function ContactForm() {
   } = useForm({ resolver: yupResolver(contactShema) })
 
   const onSubmit = async (data: IContact) => {
-    const response = await createContact(data)
-    if (response.errors) {
+    const response: IContactResponse = await createContact(data)
+    if ('error' in response) {
       alert(response.message)
     } else {
       alert('Message sent')
@@ -25,7 +25,7 @@ export default function ContactForm() {
   }
 
   return (
-    <form className="bg-white shadow-lg rounded-xl w-full max-w-4xl mx-auto p-8">
+    <form className="bg-white shadow-lg rounded-xl w-full max-w-2xl mx-auto p-8">
       <h2 className="text-3xl font-medium mb-8 text-center">Send a message</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
         <div>
@@ -150,7 +150,7 @@ export default function ContactForm() {
         </div>
         <div className="ml-auto">
           <Button
-            buttonText="Lets Talk"
+            buttonText="Let's Talk"
             handleClick={handleSubmit(onSubmit)}
             isGradientButton={true}
           />
