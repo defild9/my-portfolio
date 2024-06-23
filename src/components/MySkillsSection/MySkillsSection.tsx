@@ -11,7 +11,7 @@ export default async function MySkillsSection() {
         My Skills
       </h2>
       {Array.isArray(skills) && skills.length > 0 ? (
-        <div className="flex flex-wrap justify-center md:justify-between gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {skills.map((skill) => (
             <SkillCard
               key={skill._id}
