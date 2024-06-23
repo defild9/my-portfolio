@@ -7,6 +7,9 @@ interface ICreatePortfolioModalProps {
     title: string
     description: string
     formData: FormData | null
+    websiteUrl?: string
+    githubUrl?: string
+    technologies?: string[]
   }) => void
   onClose: () => void
 }
@@ -18,17 +21,31 @@ export default function CreatePortfolioModal({
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [image, setImage] = useState<File | null>(null)
+  const [websiteUrl, setWebsiteUrl] = useState('')
+  const [githubUrl, setGithubUrl] = useState('')
+  const [technologies, setTechnologies] = useState<string[]>([])
 
   const handleCreate = async () => {
+    const formData = new FormData()
     if (image) {
-      const formData = new FormData()
       formData.append('portfolioImage', image)
       formData.append('portfolioTitle', title)
-      onCreate({ title, description, formData })
-    } else {
-      onCreate({ title, description, formData: null })
     }
+    const newPortfolio = {
+      title,
+      description,
+      formData: image ? formData : null,
+      websiteUrl,
+      githubUrl,
+      technologies,
+    }
+    onCreate(newPortfolio)
     onClose()
+  }
+
+  const handleTechnologiesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value
+    setTechnologies(value.split(',').map((tech) => tech.trim()))
   }
 
   return (
@@ -66,7 +83,39 @@ export default function CreatePortfolioModal({
               onChange={(e) =>
                 setImage(e.target.files ? e.target.files[0] : null)
               }
-              required
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+              Website URL
+            </label>
+            <input
+              type="text"
+              value={websiteUrl}
+              onChange={(e) => setWebsiteUrl(e.target.value)}
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+              GitHub URL
+            </label>
+            <input
+              type="text"
+              value={githubUrl}
+              onChange={(e) => setGithubUrl(e.target.value)}
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+              Technologies (comma separated)
+            </label>
+            <input
+              type="text"
+              value={technologies.join(', ')}
+              onChange={handleTechnologiesChange}
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>

@@ -9,7 +9,11 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col justify-start">
       <MainSection />
-      <AboutSection />
+      <AboutSection
+        text={
+          'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Fuga asperiores aut ipsum exercitationem assumenda deleniti, ab aspernatur a? Unde aut reprehenderit quos laboriosam ea repellat placeat voluptate impedit fugiat sunt!'
+        }
+      />
       <MySkillsSection />
       <PortfolioSection />
       <ExperienceSection />

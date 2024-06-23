@@ -1,0 +1,16 @@
+.gradient-border {
+  border: 2px solid;
+  border-image-slice: 1;
+  border-width: 2px;
+  border-image-source: linear-gradient(
+    to right,
+    #a751cf 0%,
+    #d36666 34%,
+    #cc9d57 67%,
+    #e7ca34 95%
+  );
+}
+
+.gradient-border:hover {
+  transform: scale(1.05);
+}

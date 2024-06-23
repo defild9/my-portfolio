@@ -1,13 +1,29 @@
+'use client'
 import React from 'react'
 import './Style.css'
+import { useRouter } from 'next/navigation'
+import Button from '../Button/Button'
 
 interface IPortfolioCardProp {
-  image: string;
-  title: string;
-  description: string;
+  id: string
+  image: string
+  title: string
+  description: string
 }
 
-export default function PortfolioCard({ image, title, description }: IPortfolioCardProp) {
+export default function PortfolioCard({
+  id,
+  image,
+  title,
+  description,
+}: IPortfolioCardProp) {
+  const router = useRouter()
+  const truncatedDescription =
+    description.length > 100 ? description.slice(0, 100) + '...' : description
+
+  const handleClick = () => {
+    router.push(`/projects/${id}`)
+  }
   return (
     <div className="portfolio-card w-72 sm:w-80 md:w-96 lg:w-80 xl:w-96 h-96 flex items-center justify-center m-4">
       <div className="relative w-full h-full overflow-hidden rounded-3xl shadow-lg group">
@@ -21,13 +37,11 @@ export default function PortfolioCard({ image, title, description }: IPortfolioC
             {title}
           </h2>
           <p className="text-sm sm:text-base md:text-lg text-white text-center mb-4">
-            {description}
+            {truncatedDescription}
           </p>
-          <button className="px-4 py-2 text-xs sm:text-sm md:text-base font-medium text-gray-800 bg-yellow-400 rounded hover:bg-yellow-500">
-            See More
-          </button>
+          <Button buttonText='See More' isGradientButton handleClick={handleClick}/>
         </div>
       </div>
     </div>
-  );
+  )
 }

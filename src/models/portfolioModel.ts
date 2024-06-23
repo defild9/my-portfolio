@@ -15,6 +15,18 @@ const portfolioSchema = new Schema<IPortfolioDocument>(
       type: String,
       required: true,
     },
+    websiteUrl: {
+      type: String,
+      required: false,
+    },
+    githubUrl: {
+      type: String,
+      required: false,
+    },
+    technologies: {
+      type: [String],
+      required: false,
+    },
   },
   {
     timestamps: true,
