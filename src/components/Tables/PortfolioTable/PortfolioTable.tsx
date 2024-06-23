@@ -9,10 +9,13 @@ import {
 import {
   IExtendedPortfolio,
   IPortfolio,
+  IUpdatedPortfolio,
 } from '@/models/modelTypes/portfolioModel.types'
 import CreatePortfolioModal from '@/components/Modals/CreatePortfolioModal/CreatePortfolioModal'
 import UpdatePortfolioModal from '@/components/Modals/UpdatePortfolioModal/UpdatePortfolioModal'
 import DeletePortfolioModal from '@/components/Modals/DeletePortfolioModal/DeletePortfolioModal'
+import Link from 'next/link'
+
 interface IPortfolioTableProps {
   portfolios: IExtendedPortfolio[]
 }
@@ -52,14 +55,14 @@ export default function PortfolioTable({ portfolios }: IPortfolioTableProps) {
     setSelectedPortfolio(null)
   }
 
-  const handleCreate = async (newPortfolio: IPortfolio) => {
+  const handleCreate = async (newPortfolio: IUpdatedPortfolio) => {
     const createdPortfolio = await createPortfolio(newPortfolio)
     if ('_id' in createdPortfolio) {
       closeCreateModal()
     }
   }
 
-  const handleUpdate = async (updatedPortfolio: IPortfolio) => {
+  const handleUpdate = async (updatedPortfolio: IUpdatedPortfolio) => {
     if (selectedPortfolio) {
       await updatePortfolio(selectedPortfolio._id, updatedPortfolio)
       closeUpdateModal()
@@ -91,6 +94,9 @@ export default function PortfolioTable({ portfolios }: IPortfolioTableProps) {
               <th className="py-2 px-4 border-b text-left">Image</th>
               <th className="py-2 px-4 border-b text-left">Title</th>
               <th className="py-2 px-4 border-b text-left">Description</th>
+              <th className="py-2 px-4 border-b text-left">Website</th>
+              <th className="py-2 px-4 border-b text-left">GitHub</th>
+              <th className="py-2 px-4 border-b text-left">Technologies</th>
               <th className="py-2 px-4 border-b text-left">Actions</th>
             </tr>
           </thead>
@@ -105,9 +111,32 @@ export default function PortfolioTable({ portfolios }: IPortfolioTableProps) {
                       className="w-16 h-16 object-cover"
                     />
                   </td>
-                  <td className="py-2 px-4 border-b">{portfolio.title}</td>
+                  <td className="py-2 px-4 border-b">
+                    <Link href={`/projects/${portfolio._id}`}>{portfolio.title}</Link>
+                  </td>
                   <td className="py-2 px-4 border-b">
                     {portfolio.description}
+                  </td>
+                  <td className="py-2 px-4 border-b">
+                    <a
+                      href={portfolio.websiteUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {portfolio.websiteUrl}
+                    </a>
+                  </td>
+                  <td className="py-2 px-4 border-b">
+                    <a
+                      href={portfolio.githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {portfolio.githubUrl}
+                    </a>
+                  </td>
+                  <td className="py-2 px-4 border-b">
+                    {portfolio.technologies?.join(', ')}
                   </td>
                   <td className="py-2 px-4 border-b">
                     <button
