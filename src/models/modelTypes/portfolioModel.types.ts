@@ -4,7 +4,19 @@ export interface IPortfolio {
   image: string
   title: string
   description: string
+  websiteUrl?: string
+  githubUrl?: string
+  technologies?: string[]
 }
+export interface IUpdatedPortfolio {
+  title: string;
+  description: string;
+  formData: FormData | null;
+  websiteUrl?: string;
+  githubUrl?: string;
+  technologies?: string[];
+}
+
 
 export interface IPortfolioDocument extends IPortfolio, Document {
   createdAt: Date

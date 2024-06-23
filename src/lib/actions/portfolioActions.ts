@@ -9,15 +9,28 @@ export const createPortfolio = async ({
   title,
   description,
   formData,
+  websiteUrl,
+  githubUrl,
+  technologies,
 }: {
   title: string
   description: string
   formData: FormData | null
+  websiteUrl?: string
+  githubUrl?: string
+  technologies?: string[]
 }) => {
   await connectToMongoDB()
   try {
     const image = formData ? await savePhoto(formData) : 'no photo'
-    const newPortfolio = new Portfolio({ image, title, description })
+    const newPortfolio = new Portfolio({
+      image,
+      title,
+      description,
+      websiteUrl,
+      githubUrl,
+      technologies,
+    })
     await newPortfolio.save()
     revalidatePath('/')
     return JSON.parse(JSON.stringify(newPortfolio))
@@ -33,16 +46,33 @@ export const updatePortfolio = async (
     title,
     description,
     formData,
+    websiteUrl,
+    githubUrl,
+    technologies,
   }: {
     title: string
     description: string
     formData: FormData | null
+    websiteUrl?: string
+    githubUrl?: string
+    technologies?: string[]
   }
 ) => {
   await connectToMongoDB()
   try {
     const image = formData ? await savePhoto(formData) : 'no photo'
-    await Portfolio.updateOne({ _id: id }, { image, title, description })
+    console.log({
+      image,
+      title,
+      description,
+      websiteUrl,
+      githubUrl,
+      technologies,
+    })
+    await Portfolio.updateOne(
+      { _id: id },
+      { image, title, description, websiteUrl, githubUrl, technologies }
+    )
     revalidatePath('/')
     return { message: 'Portfolio updated' }
   } catch (error) {
