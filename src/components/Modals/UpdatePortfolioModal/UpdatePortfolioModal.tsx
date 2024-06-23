@@ -9,6 +9,9 @@ interface IUpdatePortfolioModalProps {
     title: string
     description: string
     formData: FormData | null
+    websiteUrl?: string
+    githubUrl?: string
+    technologies?: string[]
   }) => void
   onClose: () => void
 }
@@ -20,7 +23,11 @@ export default function UpdatePortfolioModal({
 }: IUpdatePortfolioModalProps) {
   const [formData, setFormData] = useState<IPortfolio>(portfolio)
   const [image, setImage] = useState<File | null>(null)
+  const [technologies, setTechnologies] = useState<string[]>(
+    portfolio.technologies || []
+  )
 
+  console.log(formData)
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -28,19 +35,25 @@ export default function UpdatePortfolioModal({
     setFormData((prevData) => ({ ...prevData, [name]: value }))
   }
 
+  const handleTechnologiesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value
+    setTechnologies(value.split(',').map((tech) => tech.trim()))
+  }
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    if (image) {
-      const updatedFormData = new FormData()
-      updatedFormData.append('portfolioImage', image)
-      updatedFormData.append('portfolioTitle', formData.title)
-      onConfirm({
-        ...formData,
-        formData: updatedFormData,
-      })
-    } else {
-      onConfirm({ ...formData, formData: null })
+    const updatedPortfolio = {
+      ...formData,
+      formData: image ? new FormData() : null,
+      technologies,
     }
+
+    if (image) {
+      updatedPortfolio.formData!.append('portfolioImage', image)
+      updatedPortfolio.formData!.append('portfolioTitle', formData.title)
+    }
+
+    onConfirm(updatedPortfolio)
   }
 
   return (
@@ -75,6 +88,38 @@ export default function UpdatePortfolioModal({
               name="description"
               value={formData.description}
               onChange={handleChange}
+              className="w-full p-2 border border-gray-300 rounded mt-1"
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700">Website URL</label>
+            <input
+              type="text"
+              name="websiteUrl"
+              value={formData.websiteUrl}
+              onChange={handleChange}
+              className="w-full p-2 border border-gray-300 rounded mt-1"
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700">GitHub URL</label>
+            <input
+              type="text"
+              name="githubUrl"
+              value={formData.githubUrl}
+              onChange={handleChange}
+              className="w-full p-2 border border-gray-300 rounded mt-1"
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700">
+              Technologies (comma separated)
+            </label>
+            <input
+              type="text"
+              name="technologies"
+              value={technologies.join(', ')}
+              onChange={handleTechnologiesChange}
               className="w-full p-2 border border-gray-300 rounded mt-1"
             />
           </div>
