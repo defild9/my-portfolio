@@ -5,6 +5,15 @@ import Button from '../Button/Button'
 import Image from 'next/image'
 
 function MainSection() {
+  const handleDownloadCV = () => {
+    const link = document.createElement('a')
+    link.href = '/Yevhenii_Biletskyi_CV.pdf'
+    link.download = 'Yevhenii_Biletskyi_CV.pdf'
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+  }
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-10 px-10 md:px-40 py-20">
       <div className="flex justify-center order-1 md:order-2">
@@ -24,10 +33,11 @@ function MainSection() {
           👋 Hey there, It's Yevhenii Biletskyi
         </h1>
         <p className="text-lg text-justify mb-10">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita
-          dicta tempore animi doloremque dignissimos nisi mollitia ut alias
-          voluptatibus et. Nesciunt sit repudiandae aliquid quos qui fugit animi
-          tempora asperiores?
+          I'm a full-stack developer with a passion for creating dynamic,
+          user-friendly web applications. With expertise in both front-end and
+          back-end technologies, I build seamless digital experiences from
+          concept to deployment.dedicated to delivering high-quality software
+          that drives success.
         </p>
         <div className="flex gap-4">
           <Button
@@ -38,7 +48,7 @@ function MainSection() {
           <Button
             buttonText="My CV"
             isGradientButton={false}
-            handleClick={() => {}}
+            handleClick={handleDownloadCV}
           />
         </div>
       </div>
