@@ -11,7 +11,7 @@ export default function Home() {
       <MainSection />
       <AboutSection
         text={
-          'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Fuga asperiores aut ipsum exercitationem assumenda deleniti, ab aspernatur a? Unde aut reprehenderit quos laboriosam ea repellat placeat voluptate impedit fugiat sunt!'
+          "I'm Yevhenii Biletskyi, a young and ambitious full-stack developer with a strong background in web development. Specializing in technologies like JavaScript/TypeScript, NodeJS, ASP.NET, HTML/CSS, and React/NextJS, I am passionate about creating innovative web applications using cutting-edge technologies. I thrive in dynamic team environments where I can contribute my skills and continue to grow as a professional. My dedication to continuous learning and improvement drives me to stay updated with the latest industry trends. Let's create something amazing together!"
         }
       />
       <MySkillsSection />
