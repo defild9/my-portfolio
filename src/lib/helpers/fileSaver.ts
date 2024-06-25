@@ -1,21 +1,34 @@
 'use server'
-import { promises as fsPromises } from 'fs'
+import { v2 as cloudinary } from 'cloudinary'
+import { revalidatePath } from 'next/cache'
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+})
 
 export async function savePhoto(formData: FormData): Promise<string> {
-  const file = formData.get('skillImage') as File
-  const skillName = formData.get('skillName') as string
+  const file = formData.get('image') as File
+  const arrayBuffer = await file.arrayBuffer()
+  const buffer = new Uint8Array(arrayBuffer)
 
-  const filePath = `./public/${skillName}.${getFileExtension(file.name)}`
-  await saveFile(file, filePath)
-
-  return `/${skillName}.${getFileExtension(file.name)}`
-}
-
-async function saveFile(file: File, filePath: string): Promise<void> {
-  const data = await file.arrayBuffer()
-  await fsPromises.writeFile(filePath, Buffer.from(data))
-}
-
-function getFileExtension(filename: string): string {
-  return filename.split('.').pop()!.toLowerCase()
+  return new Promise((resolve, reject) => {
+    cloudinary.uploader
+      .upload_stream({
+        tags:['portfolio-skills']
+      }, (error, result) => {
+        if (error) {
+          reject(error)
+          return
+        }
+        if (!result) {
+          reject(new Error('Upload result is undefined'))
+          return
+        }
+        resolve(result.secure_url)
+      })
+      .end(buffer)
+    revalidatePath('/')
+  })
 }
