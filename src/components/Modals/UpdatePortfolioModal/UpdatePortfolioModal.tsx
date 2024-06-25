@@ -49,7 +49,7 @@ export default function UpdatePortfolioModal({
     }
 
     if (image) {
-      updatedPortfolio.formData!.append('portfolioImage', image)
+      updatedPortfolio.formData!.append('image', image)
       updatedPortfolio.formData!.append('portfolioTitle', formData.title)
     }
 

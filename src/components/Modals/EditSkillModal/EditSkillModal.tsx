@@ -20,7 +20,7 @@ export default function EditSkillModal({
 
     formData.append('skillName', skillName)
     if (skillImage) {
-      formData.append('skillImage', skillImage)
+      formData.append('image', skillImage)
     }
 
     try {
@@ -69,7 +69,7 @@ export default function EditSkillModal({
             <input
               type="file"
               id="skillImage"
-              name="skillImage"
+              name="image"
               onChange={(e) => setSkillImage(e.target.files?.[0] || null)}
               className="w-full border border-gray-300 rounded px-2 py-1"
             />

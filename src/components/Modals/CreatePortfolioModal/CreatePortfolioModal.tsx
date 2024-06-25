@@ -28,7 +28,7 @@ export default function CreatePortfolioModal({
   const handleCreate = async () => {
     const formData = new FormData()
     if (image) {
-      formData.append('portfolioImage', image)
+      formData.append('image', image)
       formData.append('portfolioTitle', title)
     }
     const newPortfolio = {
