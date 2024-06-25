@@ -1,6 +1,7 @@
 'use client'
 import { createSkill } from '@/lib/actions/skillActions'
 import React, { useState } from 'react'
+import { v2 as cloudinary } from 'cloudinary'
 
 interface EditSkillModalProps {
   onClose: () => void
@@ -15,7 +16,7 @@ export default function CreateSkillModal({ onClose }: EditSkillModalProps) {
 
     formData.append('skillName', skillName)
     if (skillImage) {
-      formData.append('skillImage', skillImage)
+      formData.append('image', skillImage)
     }
 
     try {
@@ -60,8 +61,8 @@ export default function CreateSkillModal({ onClose }: EditSkillModalProps) {
             </label>
             <input
               type="file"
-              id="skillImage"
-              name="skillImage"
+              id="image"
+              name="image"
               onChange={(e) => setSkillImage(e.target.files?.[0] || null)}
               className="w-full border border-gray-300 rounded px-2 py-1"
             />
